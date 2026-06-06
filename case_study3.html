@@ -1,0 +1,1895 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Case Study: GoRoute — Sri Lanka Bus Booking & Tracking App — Rushkha Ramzaan</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <style>
+        /* Custom styles for Case Study page */
+        body {
+            padding-top: 40px;
+        }
+
+        .case-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 24px 80px;
+        }
+
+        .back-nav {
+            margin-bottom: 40px;
+        }
+
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .btn-back:hover {
+            color: var(--primary-indigo);
+        }
+
+        /* Header Section */
+        .case-header {
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .case-category {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--primary-indigo);
+            margin-bottom: 12px;
+            display: block;
+            text-align: left;
+        }
+
+        .case-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: clamp(32px, 5vw, 48px);
+            font-weight: 800;
+            line-height: 1.15;
+            color: var(--text);
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+            text-align: center;
+        }
+
+        .case-subtitle {
+            font-size: 18px;
+            color: var(--text-dim);
+            line-height: 1.5;
+            max-width: 750px;
+            margin: 0 auto 38px;
+            text-align: center;
+        }
+
+        /* Meta Details Grid */
+        .case-meta-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 20px 0;
+            margin-bottom: 58px;
+        }
+
+        .meta-card {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .meta-label {
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+        }
+
+        .meta-val {
+            font-size: 13.5px;
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        /* Cover Image Styling */
+        .case-cover-container {
+            width: 100%;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--border-bright);
+            margin-bottom: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .case-cover-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+            transition: transform 0.5s var(--ease-smooth);
+        }
+
+        .case-cover-container:hover .case-cover-img {
+            transform: scale(1.02);
+        }
+
+        /* Section Layout */
+        .case-section {
+            padding: 0;
+            margin-top: 58px;
+            margin-bottom: 58px;
+        }
+
+        .section-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text);
+            margin-top: 0;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-number {
+            font-size: 14px;
+            color: var(--primary-indigo);
+            font-weight: 800;
+        }
+
+        .section-headline {
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 1.5;
+            color: #a5b4fc;
+            margin-bottom: 26px;
+            border-left: 3px solid var(--primary-indigo);
+            padding-left: 12px;
+        }
+
+        .section-content {
+            font-size: 14px;
+            line-height: 1.7;
+            color: var(--text-dim);
+        }
+
+        .section-content p {
+            margin-bottom: 18px;
+        }
+
+        /* Metrics Row */
+        .metrics-row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin: 20px 0;
+        }
+
+        @media(min-width: 640px) {
+            .metrics-row {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .metric-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .metric-number {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--primary-violet);
+            margin-bottom: 4px;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .metric-label {
+            font-size: 10px;
+            line-height: 1.3;
+            color: var(--text-muted);
+        }
+
+        /* Side-by-side columns */
+        .grid-2col {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            margin: 16px 0;
+        }
+
+        @media(min-width: 768px) {
+            .grid-2col {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        /* Personas */
+        .persona-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .persona-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .persona-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            object-fit: cover;
+        }
+
+        .persona-name {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .persona-title {
+            font-size: 10px;
+            color: var(--text-muted);
+        }
+
+        .persona-quote {
+            font-style: italic;
+            font-size: 13.5px;
+            color: var(--text);
+            border-left: 2px solid var(--primary-indigo);
+            padding-left: 10px;
+            margin: 4px 0;
+        }
+
+        .persona-list {
+            list-style-type: none;
+            padding-left: 0;
+            font-size: 12.5px;
+            color: var(--text-muted);
+        }
+
+        .persona-list li {
+            margin-bottom: 6px;
+            position: relative;
+            padding-left: 12px;
+        }
+
+        .persona-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--primary-indigo);
+        }
+
+        /* Pain points block */
+        .pain-point-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 16px 0;
+        }
+
+        .pain-point-item {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-left: 3px solid #ef4444;
+            border-radius: 8px;
+            padding: 12px 16px;
+            font-size: 13.5px;
+        }
+
+        .pain-point-item strong {
+            color: var(--text);
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .pain-point-desc {
+            color: var(--text-muted);
+            font-size: 12.5px;
+        }
+
+        /* User Flow Diagram */
+        .user-flow-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            margin: 32px 0;
+            flex-wrap: nowrap;
+        }
+
+        .flow-step-card {
+            flex: 1;
+            min-width: 100px;
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s var(--ease-smooth);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .flow-step-card:hover {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(99, 102, 241, 0.5);
+            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.15);
+        }
+
+        .flow-step-num {
+            font-size: 10px;
+            font-weight: 800;
+            color: var(--primary-indigo);
+            background: rgba(99, 102, 241, 0.1);
+            padding: 2px 8px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .flow-step-name {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .flow-step-desc {
+            font-size: 11px;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        .flow-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 16px;
+        }
+
+        @media (max-width: 768px) {
+            .user-flow-diagram {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 16px;
+            }
+
+            .flow-arrow {
+                transform: rotate(90deg);
+                margin: 4px 0;
+            }
+        }
+
+        /* Interactive Smartphone Simulator */
+        .sim-container {
+            background: var(--surface-solid);
+            border: 1px solid var(--border-bright);
+            border-radius: 20px;
+            padding: 24px 16px;
+            margin: 24px 0;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .sim-header-desc {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .sim-header-desc h4 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 15px;
+            margin-bottom: 4px;
+            color: var(--text);
+        }
+
+        .sim-header-desc p {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .phone-wrapper {
+            width: 320px;
+            height: 580px;
+            background: #08080f;
+            border: 8px solid #1e1b4b;
+            border-radius: 36px;
+            position: relative;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Phone notch */
+        .phone-notch {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 140px;
+            height: 18px;
+            background: #1e1b4b;
+            border-bottom-left-radius: 12px;
+            border-bottom-right-radius: 12px;
+            z-index: 1000;
+        }
+
+        /* Phone screen header status bar */
+        .phone-status-bar {
+            height: 28px;
+            background: #0d0c1e;
+            padding: 4px 16px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 10px;
+            color: var(--text-muted);
+            font-weight: 600;
+            z-index: 999;
+            user-select: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            margin-top: 4px;
+        }
+
+        .phone-status-icons {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* Phone App Body */
+        .phone-body {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background: #090911;
+            overflow: hidden;
+        }
+
+        /* Screen States */
+        .phone-screen-state {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            padding: 16px;
+        }
+
+        .phone-screen-state.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* App Navbar inside simulator */
+        .app-bar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 10px;
+            margin-top: 12px;
+        }
+
+        .app-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .btn-app-back {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            padding: 0;
+            font-size: 16px;
+        }
+
+        .btn-app-back:hover {
+            color: var(--text);
+        }
+
+        /* Screen 1: Search Form */
+        .search-form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            flex-grow: 1;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .input-group label {
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            letter-spacing: 0.05em;
+        }
+
+        .sim-input {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 8px 12px;
+            color: var(--text);
+            font-size: 12px;
+            cursor: pointer;
+            text-align: left;
+            user-select: none;
+        }
+
+        .sim-input:hover {
+            border-color: var(--primary-indigo);
+        }
+
+        .btn-sim-primary {
+            background: var(--accent-gradient);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            text-align: center;
+            transition: transform 0.2s;
+            margin-top: auto;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-sim-primary:active {
+            transform: scale(0.98);
+        }
+
+        .btn-sim-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        /* Screen 2: Buses List */
+        .bus-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        .bus-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 10px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: left;
+        }
+
+        .bus-card:hover {
+            border-color: rgba(99, 102, 241, 0.3);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .bus-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .bus-name {
+            font-size: 11px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .bus-badge {
+            font-size: 8px;
+            background: rgba(59, 130, 246, 0.15);
+            color: #60a5fa;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        .bus-card-details {
+            display: flex;
+            justify-content: space-between;
+            font-size: 9.5px;
+            color: var(--text-muted);
+        }
+
+        .bus-price {
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--primary-indigo);
+        }
+
+        /* Screen 3: Seat Map */
+        .seat-map-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        .bus-interior {
+            background: rgba(255, 255, 255, 0.01);
+            border: 1.5px solid rgba(255, 255, 255, 0.05);
+            border-radius: 14px;
+            padding: 10px;
+            width: 100%;
+            max-width: 220px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .bus-cabin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 6px;
+        }
+
+        .driver-seat {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .seating-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+            justify-items: center;
+        }
+
+        /* Space between 2nd and 3rd column representing isle */
+        .seating-grid>div:nth-child(4n-2) {
+            margin-right: 12px;
+        }
+
+        .seat {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 9px;
+            font-weight: 700;
+            color: var(--text-muted);
+            transition: all 0.2s;
+        }
+
+        .seat.taken {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: transparent;
+            color: rgba(255, 255, 255, 0.15);
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .seat.selected {
+            background: var(--primary-indigo);
+            border-color: var(--primary-indigo);
+            color: white;
+            box-shadow: 0 0 8px rgba(99, 102, 241, 0.4);
+        }
+
+        .seat-legend {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            font-size: 8.5px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .legend-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 2px;
+        }
+
+        .selected-seat-badge {
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 8px;
+            padding: 8px;
+            width: 100%;
+            text-align: center;
+            font-size: 11px;
+            color: white;
+            font-weight: 600;
+        }
+
+        /* Screen 4: Payment screen */
+        .payment-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .payment-option-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 8px;
+            padding: 10px 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: left;
+        }
+
+        .payment-option-card:hover {
+            border-color: rgba(255, 255, 255, 0.12);
+        }
+
+        .payment-option-card.selected {
+            border-color: var(--primary-indigo);
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        .payment-radio {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 1px solid var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .payment-option-card.selected .payment-radio {
+            border-color: var(--primary-indigo);
+        }
+
+        .payment-radio-inner {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--primary-indigo);
+            display: none;
+        }
+
+        .payment-option-card.selected .payment-radio-inner {
+            display: block;
+        }
+
+        .payment-logo {
+            font-size: 14px;
+        }
+
+        .payment-name {
+            font-size: 11px;
+            font-weight: 600;
+            color: white;
+        }
+
+        /* Screen 5: Tracking & Ticket Success */
+        .success-panel {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        .success-icon {
+            font-size: 20px;
+            color: #22c55e;
+            background: rgba(34, 197, 94, 0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 4px;
+        }
+
+        .ticket-qr {
+            width: 90px;
+            height: 90px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            color: #030307;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            margin: 6px 0;
+            user-select: none;
+        }
+
+        .ticket-details {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 8px 12px;
+            width: 100%;
+            font-size: 9.5px;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .ticket-row {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Tracking Screen state overlay/details */
+        .live-tracking-box {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            height: 100%;
+        }
+
+        .sim-map-viewport {
+            flex-grow: 1;
+            background: #111122;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            border: 1.5px solid rgba(255, 255, 255, 0.05);
+            height: 220px;
+        }
+
+        .sim-map-grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 0),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 0);
+            background-size: 16px 16px;
+        }
+
+        /* Map routes */
+        .sim-map-route {
+            position: absolute;
+            top: 55%;
+            left: 20%;
+            width: 60%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 2px;
+        }
+
+        .sim-map-route-active {
+            position: absolute;
+            top: 55%;
+            left: 20%;
+            width: 0%;
+            height: 4px;
+            background: var(--primary-blue);
+            box-shadow: 0 0 6px var(--primary-blue);
+            border-radius: 2px;
+        }
+
+        .sim-map-route-active.animate {
+            width: 45%;
+            transition: width 4s linear;
+        }
+
+        .sim-map-pin {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .sim-map-pin.start {
+            top: 55%;
+            left: 20%;
+            background: #ef4444;
+            box-shadow: 0 0 6px #ef4444;
+        }
+
+        .sim-map-pin.end {
+            top: 55%;
+            left: 80%;
+            background: #22c55e;
+            box-shadow: 0 0 6px #22c55e;
+        }
+
+        .sim-map-bus {
+            position: absolute;
+            top: 55%;
+            left: 20%;
+            transform: translate(-50%, -85%);
+            font-size: 16px;
+            z-index: 10;
+        }
+
+        .sim-map-bus.animate {
+            left: 65%;
+            transition: left 4s linear;
+        }
+
+        .tracking-hud {
+            background: rgba(13, 12, 30, 0.85);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 8px 10px;
+            margin-top: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            text-align: left;
+        }
+
+        .tracking-hud-title {
+            font-size: 8px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .tracking-hud-val {
+            font-size: 12.5px;
+            font-weight: 800;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .pulse-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #ef4444;
+            animation: pulse-glow 1.5s infinite;
+        }
+
+        @keyframes pulse-glow {
+            0% {
+                transform: scale(0.9);
+                opacity: 0.6;
+                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.5);
+            }
+
+            50% {
+                transform: scale(1.1);
+                opacity: 1;
+                box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.2);
+            }
+
+            100% {
+                transform: scale(0.9);
+                opacity: 0.6;
+                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+            }
+        }
+
+        /* Loading Shimmer indicator */
+        .shimmer-loader {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin: auto 0;
+            width: 100%;
+        }
+
+        .shimmer-block {
+            height: 48px;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.02) 25%, rgba(255, 255, 255, 0.06) 50%, rgba(255, 255, 255, 0.02) 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 8px;
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: 200% 0;
+            }
+
+            100% {
+                background-position: -200% 0;
+            }
+        }
+
+        /* Comparison / Wireframe UI layout */
+        .design-showcase {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+            margin: 20px 0;
+        }
+
+        @media(min-width: 640px) {
+            .design-showcase {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .showcase-box {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+        }
+
+        .showcase-tag {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--primary-indigo);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .showcase-heading {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 12px;
+        }
+
+        .showcase-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* Figma Prototype Card */
+        .prototype-link-card {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(139, 92, 246, 0.08) 100%);
+            border: 1px solid var(--border-bright);
+            border-radius: 16px;
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin: 24px 0;
+        }
+
+        .proto-text-wrap h4 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 4px;
+        }
+
+        .proto-text-wrap p {
+            font-size: 12.5px;
+            color: var(--text-dim);
+            margin: 0;
+        }
+
+        .btn-proto-link {
+            background: var(--accent-gradient);
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 12.5px;
+            font-weight: 700;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .btn-proto-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(99, 102, 241, 0.45);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- AMBIENT BACKGROUND ORBS -->
+    <div class="ambient-orbs-container">
+        <div class="ambient-orb orb-indigo"></div>
+        <div class="ambient-orb orb-purple"></div>
+    </div>
+
+    <div class="case-container">
+
+        <!-- Back Navigation -->
+        <div class="back-nav">
+            <a href="index.html#work" class="btn-back">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                Back to Portfolio
+            </a>
+        </div>
+
+        <!-- Case Study Header -->
+        <header class="case-header">
+            <span class="case-category">Product Design Case Study</span>
+            <h1 class="case-title">GoRoute — Sri Lanka Bus Booking & Tracking App</h1>
+            <p class="case-subtitle">Designing a seamless mobile solution to resolve unpredictable wait times and cash
+                friction in Sri Lankan public bus travel through real-time GPS tracking and cashless reservations.</p>
+        </header>
+
+        <!-- Case Study Cover Image -->
+        <div class="case-cover-container">
+            <img src="assets/images/goroute_cover.png" alt="GoRoute App Cover" class="case-cover-img" />
+        </div>
+
+        <!-- Meta Details Grid -->
+        <div class="case-meta-grid">
+            <div class="meta-card">
+                <span class="meta-label">Role</span>
+                <span class="meta-val">Lead UI/UX Designer & Researcher</span>
+            </div>
+            <div class="meta-card">
+                <span class="meta-label">Timeline</span>
+                <span class="meta-val">4 Weeks</span>
+            </div>
+            <div class="meta-card">
+                <span class="meta-label">Platform</span>
+                <span class="meta-val">Android Mobile App</span>
+            </div>
+            <div class="meta-card">
+                <span class="meta-label">Deliverables</span>
+                <span class="meta-val">User Flows, Wireframes, Figma Prototype, SUS Report</span>
+            </div>
+        </div>
+
+        <!-- 1. Problem -->
+        <section class="case-section">
+            <h2 class="section-title"><span class="section-number">01</span> Problem</h2>
+            <div class="section-headline">
+                Millions of daily Sri Lankan commuters depend on public buses, yet face a completely undigitized transit
+                experience with zero real-time schedules.
+            </div>
+            <div class="section-content">
+                <p>Sri Lanka lacks a unified digital platform for intercity and local bus travel. Daily
+                    commuters—particularly university students and working professionals—are forced to arrive
+                    excessively early at bus stands, stand in uncertainty for prolonged periods, and compete
+                    aggressively for seats upon boarding. Timetables are outdated or absent, delays go unannounced, and
+                    payment is strictly cash-only, creating extreme friction for a tech-savvy generation.</p>
+            </div>
+        </section>
+
+        <!-- 2. Research -->
+        <section class="case-section">
+            <h2 class="section-title"><span class="section-number">02</span> Research</h2>
+            <div class="section-headline">
+                Observations at Pettah and Gampaha stands, alongside 40+ surveys, confirmed 82% of passengers face
+                critical queue frustration.
+            </div>
+            <div class="section-content">
+                <p>Data was gathered through field observations at major bus terminals (Colombo Fort/Pettah and Gampaha)
+                    and a digital survey distributed to daily student and professional travelers. The research revealed
+                    that a vast majority of users rely on android smartphones, presenting a clear opportunity to
+                    establish a digital bus travel solution.</p>
+
+                <div class="grid-2col">
+                    <!-- Persona Nuwan -->
+                    <div class="persona-card" style="grid-column: 1 / -1;">
+                        <div class="persona-header">
+                            <img src="assets/images/persona_nuwan.png" alt="Nuwan Karunaratne" class="persona-avatar" />
+                            <div>
+                                <div class="persona-name">Nuwan Karunaratne (Undergraduate Student)</div>
+                                <div class="persona-title">University of Kelaniya · Moderately Tech-Savvy · Gampaha to
+                                    Colombo Commuter</div>
+                            </div>
+                        </div>
+                        <p class="persona-quote">"I leave home early just in case, but sometimes two buses are delayed
+                            and I miss my first lecture."</p>
+                        <div class="grid-2col" style="margin: 0; gap: 16px;">
+                            <ul class="persona-list">
+                                <li><strong>Context:</strong> Commutes 1.5 hours daily during peak morning rush hours.
+                                </li>
+                                <li><strong>Goals:</strong> Know bus departure times, secure a seat in advance, and
+                                    track the bus live.</li>
+                            </ul>
+                            <ul class="persona-list">
+                                <li><strong>Frustrations:</strong> Standing 40+ minutes at bus stands, carrying exact
+                                    physical cash daily.</li>
+                                <li><strong>Needs:</strong> Real-time arrival updates and Sri Lankan mobile wallet
+                                    payment options (eZ Cash/FriMi).</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Pain Points -->
+        <section class="case-section">
+            <h2 class="section-title"><span class="section-number">03</span> Pain Points</h2>
+            <div class="section-headline">
+                Five core frustrations degrade the passenger experience and create severe transit inefficiencies.
+            </div>
+            <div class="section-content">
+                <!-- Metrics Row -->
+                <div class="metrics-row">
+                    <div class="metric-card">
+                        <div class="metric-number">82%</div>
+                        <div class="metric-label">Unannounced Waiting Frustration</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-number">74%</div>
+                        <div class="metric-label">Missed Bus due to Lack of Info</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-number">88%</div>
+                        <div class="metric-label">Demand for Booking/Tracking App</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-number">91%</div>
+                        <div class="metric-label">Demanded Real-Time Arrival Info</div>
+                    </div>
+                </div>
+
+                <div class="pain-point-list">
+                    <div class="pain-point-item">
+                        <strong>1. No Real-Time Bus Tracking</strong>
+                        <span class="pain-point-desc">Passengers have zero visibility into where their bus is, forcing
+                            indefinite waiting at bus stands under hot or rainy conditions.</span>
+                    </div>
+                    <div class="pain-point-item">
+                        <strong>2. No Advance Seat Booking</strong>
+                        <span class="pain-point-desc">Overcrowded buses trigger high anxiety. Commuters must physically
+                            stand and fight for seats upon boarding during peak hours.</span>
+                    </div>
+                    <div class="pain-point-item">
+                        <strong>3. Outdated Timetable TIM (Timetable Information Management)</strong>
+                        <span class="pain-point-desc">Printed schedules do not reflect current traffic delays, sudden
+                            breakdowns, route changes, or operators cancelling runs.</span>
+                    </div>
+                    <div class="pain-point-item">
+                        <strong>4. Friction in Cash-Only Payments</strong>
+                        <span class="pain-point-desc">Fares require exact currency coins. Dealing with busy conductors
+                            for change causes delays and payment disputes.</span>
+                    </div>
+                    <div class="pain-point-item">
+                        <strong>5. Scattered, Unverified Information</strong>
+                        <span class="pain-point-desc">Passengers must rely on informal WhatsApp groups, verbal rumors,
+                            or calling individual bus drivers to check route availability.</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Solution -->
+        <section class="case-section">
+            <h2 class="section-title"><span class="section-number">04</span> Solution</h2>
+            <div class="section-headline">
+                A streamlined touchscreen solution designed to minimize cognitive load, accelerate checkout speed, and
+                empower users with total customization control.
+            </div>
+            <div class="section-content">
+                <p>The GoRoute mobile application implements an optimized, low-friction user journey designed around
+                    core HCI usability heuristics. Specifically, we leveraged <strong>recognition over recall</strong>
+                    (visual route cards, color-coded seat statuses) and maximized <strong>user control and
+                        freedom</strong> (allowing flexible cancellations and localized digital wallet support like eZ
+                    Cash/FriMi to remove payment friction).</p>
+
+                <!-- 5-Step Visual User Flow -->
+                <div class="user-flow-diagram">
+                    <div class="flow-step-card">
+                        <span class="flow-step-num">Step 01</span>
+                        <div class="flow-step-name">Route Search</div>
+                        <span class="flow-step-desc">Enter origin/destination with pre-saved recent routes.</span>
+                    </div>
+                    <div class="flow-arrow">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </div>
+                    <div class="flow-step-card">
+                        <span class="flow-step-num">Step 02</span>
+                        <div class="flow-step-name">Route Selection</div>
+                        <span class="flow-step-desc">Compare times, seat counts, AC status, and prices.</span>
+                    </div>
+                    <div class="flow-arrow">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </div>
+                    <div class="flow-step-card">
+                        <span class="flow-step-num">Step 03</span>
+                        <div class="flow-step-name">Seat Selection</div>
+                        <span class="flow-step-desc">Pick available seats using an intuitive interactive layout.</span>
+                    </div>
+                    <div class="flow-arrow">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </div>
+                    <div class="flow-step-card">
+                        <span class="flow-step-num">Step 04</span>
+                        <div class="flow-step-name">Checkout</div>
+                        <span class="flow-step-desc">Pay using local Sri Lankan mobile wallets instantly.</span>
+                    </div>
+                    <div class="flow-arrow">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </div>
+                    <div class="flow-step-card">
+                        <span class="flow-step-num">Step 05</span>
+                        <div class="flow-step-name">Live Track</div>
+                        <span class="flow-step-desc">Track bus GPS in real-time with push ETA alerts.</span>
+                    </div>
+                </div>
+
+                <!-- Interactive Phone Simulator -->
+                <div class="sim-container">
+                    <div class="sim-header-desc">
+                        <h4>GoRoute Mobile App Simulator</h4>
+                        <p>Interact with the live booking simulation below. Search routes, select window seat 2B, pay
+                            with eZ Cash, and track your bus in real time.</p>
+                    </div>
+
+                    <div class="phone-wrapper">
+                        <div class="phone-notch"></div>
+                        <div class="phone-status-bar">
+                            <span id="phone-clock">07:15 AM</span>
+                            <div class="phone-status-icons">
+                                <span>📶</span>
+                                <span>🔋</span>
+                            </div>
+                        </div>
+                        <div class="phone-body">
+                            <!-- Screen 1: Search Form -->
+                            <div class="phone-screen-state active" id="scr-search">
+                                <div class="app-bar">
+                                    <span class="app-title">📍 GoRoute Sri Lanka</span>
+                                </div>
+                                <div class="search-form">
+                                    <div class="input-group">
+                                        <label>From</label>
+                                        <div class="sim-input">Gampaha</div>
+                                    </div>
+                                    <div class="input-group">
+                                        <label>To</label>
+                                        <div class="sim-input">Colombo Fort</div>
+                                    </div>
+                                    <div class="input-group">
+                                        <label>Date &amp; Time</label>
+                                        <div class="sim-input">Today, 7:30 AM</div>
+                                    </div>
+                                    <button class="btn-sim-primary" onclick="startSearch()">Search Buses</button>
+                                </div>
+                            </div>
+
+                            <!-- Shimmer Loading State -->
+                            <div class="phone-screen-state" id="scr-loading">
+                                <div class="app-bar">
+                                    <span class="app-title">Searching Routes...</span>
+                                </div>
+                                <div class="shimmer-loader">
+                                    <div class="shimmer-block"></div>
+                                    <div class="shimmer-block"></div>
+                                    <div class="shimmer-block"></div>
+                                </div>
+                            </div>
+
+                            <!-- Screen 2: Buses List -->
+                            <div class="phone-screen-state" id="scr-buses">
+                                <div class="app-bar">
+                                    <button class="btn-app-back" onclick="switchScreen('scr-search')">←</button>
+                                    <span class="app-title">Select Bus</span>
+                                </div>
+                                <div class="bus-list">
+                                    <div class="bus-card" onclick="selectBus('CTB Express - AC', 350)">
+                                        <div class="bus-card-header">
+                                            <span class="bus-name">CTB Express</span>
+                                            <span class="bus-badge">AC</span>
+                                        </div>
+                                        <div class="bus-card-details">
+                                            <span>Departs: 7:35 AM</span>
+                                            <span>45 Seats Avail</span>
+                                        </div>
+                                        <div class="bus-card-header">
+                                            <span style="font-size:9px;color:var(--text-muted)">Duration: 1.5 hrs</span>
+                                            <span class="bus-price">Rs. 350</span>
+                                        </div>
+                                    </div>
+                                    <div class="bus-card" style="opacity:0.6; cursor:not-allowed">
+                                        <div class="bus-card-header">
+                                            <span class="bus-name">Normal CTB - Non AC</span>
+                                            <span class="bus-badge"
+                                                style="background:rgba(255,255,255,0.05);color:var(--text-muted)">Regular</span>
+                                        </div>
+                                        <div class="bus-card-details">
+                                            <span>Departs: 7:45 AM</span>
+                                            <span>20 Seats Avail</span>
+                                        </div>
+                                        <div class="bus-card-header">
+                                            <span style="font-size:9px;color:var(--text-muted)">Duration: 2.0 hrs</span>
+                                            <span class="bus-price" style="color:var(--text-muted)">Rs. 180</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Screen 3: Seat Selection -->
+                            <div class="phone-screen-state" id="scr-seats">
+                                <div class="app-bar">
+                                    <button class="btn-app-back" onclick="switchScreen('scr-buses')">←</button>
+                                    <span class="app-title">Choose Seat</span>
+                                </div>
+                                <div class="seat-map-container">
+                                    <div class="bus-interior">
+                                        <div class="bus-cabin-header">
+                                            <span style="font-size:9px;color:var(--text-muted)">Front</span>
+                                            <span class="driver-seat">🎡</span>
+                                        </div>
+                                        <div class="seating-grid">
+                                            <!-- Row 1 -->
+                                            <div class="seat taken">1A</div>
+                                            <div class="seat taken">1B</div>
+                                            <div class="seat taken">1C</div>
+                                            <div class="seat taken">1D</div>
+                                            <!-- Row 2 -->
+                                            <div class="seat taken">2A</div>
+                                            <div class="seat" id="seat-2B" onclick="selectSeat('2B')">2B</div>
+                                            <div class="seat">2C</div>
+                                            <div class="seat">2D</div>
+                                            <!-- Row 3 -->
+                                            <div class="seat">3A</div>
+                                            <div class="seat">3B</div>
+                                            <div class="seat taken">3C</div>
+                                            <div class="seat">3D</div>
+                                            <!-- Row 4 -->
+                                            <div class="seat">4A</div>
+                                            <div class="seat">4B</div>
+                                            <div class="seat">4C</div>
+                                            <div class="seat">4D</div>
+                                        </div>
+                                    </div>
+                                    <div class="seat-legend">
+                                        <div class="legend-item"><span class="legend-dot"
+                                                style="background:rgba(255,255,255,0.08)"></span>Taken</div>
+                                        <div class="legend-item"><span class="legend-dot"
+                                                style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08)"></span>Available
+                                        </div>
+                                        <div class="legend-item"><span class="legend-dot"
+                                                style="background:var(--primary-indigo)"></span>Selected</div>
+                                    </div>
+                                    <div class="selected-seat-badge" id="seat-badge">
+                                        Seat 2B Selected - Rs. 350
+                                    </div>
+                                    <button class="btn-sim-primary" id="btn-seats-proceed" disabled
+                                        onclick="proceedToPayment()">Confirm Seat</button>
+                                </div>
+                            </div>
+
+                            <!-- Screen 4: Checkout & Payment -->
+                            <div class="phone-screen-state" id="scr-checkout">
+                                <div class="app-bar">
+                                    <button class="btn-app-back" onclick="switchScreen('scr-seats')">←</button>
+                                    <span class="app-title">Checkout</span>
+                                </div>
+                                <div style="display:flex;flex-direction:column;flex-grow:1;gap:12px;text-align:left;">
+                                    <div class="ticket-details">
+                                        <div class="ticket-row"><strong>Route:</strong> <span>Gampaha → Colombo
+                                                Fort</span></div>
+                                        <div class="ticket-row"><strong>Bus:</strong> <span id="checkout-bus-name">CTB
+                                                Express</span></div>
+                                        <div class="ticket-row"><strong>Seat:</strong> <span
+                                                id="checkout-seat-no">2B</span></div>
+                                        <div class="ticket-row"><strong>Fare:</strong> <strong
+                                                style="color:var(--primary-indigo)" id="checkout-fare">Rs. 350</strong>
+                                        </div>
+                                    </div>
+                                    <span
+                                        style="font-size:9.5px;font-weight:700;text-transform:uppercase;color:var(--text-muted);display:block;margin-top:4px">Select
+                                        Local Payment Wallet</span>
+                                    <div class="payment-list">
+                                        <div class="payment-option-card selected" onclick="selectPayment('ezcash')">
+                                            <div class="payment-radio">
+                                                <div class="payment-radio-inner"></div>
+                                            </div>
+                                            <span class="payment-logo">📱</span>
+                                            <span class="payment-name">eZ Cash (Dialog)</span>
+                                        </div>
+                                        <div class="payment-option-card" onclick="selectPayment('frimi')">
+                                            <div class="payment-radio">
+                                                <div class="payment-radio-inner"></div>
+                                            </div>
+                                            <span class="payment-logo">💳</span>
+                                            <span class="payment-name">FriMi (Nations Trust)</span>
+                                        </div>
+                                        <div class="payment-option-card" onclick="selectPayment('card')">
+                                            <div class="payment-radio">
+                                                <div class="payment-radio-inner"></div>
+                                            </div>
+                                            <span class="payment-logo">🏦</span>
+                                            <span class="payment-name">Visa / Mastercard / LANKAPAY</span>
+                                        </div>
+                                    </div>
+                                    <button class="btn-sim-primary" onclick="payNow()">Confirm &amp; Pay Rs.
+                                        350</button>
+                                </div>
+                            </div>
+
+                            <!-- Screen 5: Ticket Success -->
+                            <div class="phone-screen-state" id="scr-success">
+                                <div class="app-bar">
+                                    <span class="app-title">Booking Successful</span>
+                                </div>
+                                <div class="success-panel">
+                                    <div class="success-icon">✓</div>
+                                    <div class="ticket-qr">🎟️</div>
+                                    <div style="font-size:12px;font-weight:700;color:white;margin:4px 0;">Seat 2B
+                                        Confirmed</div>
+                                    <div class="ticket-details">
+                                        <div class="ticket-row"><span>Booking Ref:</span><strong>GR-17902</strong></div>
+                                        <div class="ticket-row"><span>Route:</span><span>Gampaha → Colombo</span></div>
+                                        <div class="ticket-row"><span>Departure:</span><span>Today, 07:35 AM</span>
+                                        </div>
+                                    </div>
+                                    <button class="btn-sim-primary" onclick="startTracking()" style="width:100%">Track
+                                        Bus Live</button>
+                                </div>
+                            </div>
+
+                            <!-- Screen 6: Live Map GPS Tracking -->
+                            <div class="phone-screen-state" id="scr-tracking">
+                                <div class="app-bar">
+                                    <span class="app-title">Live Tracking</span>
+                                </div>
+                                <div class="live-tracking-box">
+                                    <div class="sim-map-viewport">
+                                        <div class="sim-map-grid"></div>
+                                        <div class="sim-map-route"></div>
+                                        <div class="sim-map-route-active" id="map-active-line"></div>
+                                        <div class="sim-map-pin start"></div>
+                                        <div class="sim-map-pin end"></div>
+                                        <div class="sim-map-bus" id="map-bus-marker">🚌</div>
+                                    </div>
+                                    <div class="tracking-hud">
+                                        <div class="tracking-hud-title">Bus GPS Tracking Status</div>
+                                        <div class="tracking-hud-val">
+                                            <span style="font-size:11.5px;color:white">Arriving in <strong
+                                                    style="color:var(--primary-blue)" id="countdown-timer">4
+                                                    mins</strong></span>
+                                            <span class="pulse-dot"></span>
+                                        </div>
+                                        <span
+                                            style="font-size:8.5px;color:var(--text-muted);display:block;margin-top:2px">Express
+                                            CTB (Gampaha Corridor) matches Nuwan's timeline.</span>
+                                    </div>
+                                    <button class="btn-sim-primary" onclick="resetSimulator()"
+                                        style="margin-top:auto">New Journey</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Wireframes -->
+        <section class="case-section">
+            <h2 class="section-title"><span class="section-number">05</span> Wireframes</h2>
+            <div class="section-headline">
+                Mapping the screen architecture to guarantee lightning-fast route booking under 7 taps.
+            </div>
+            <div class="section-content">
+                <div class="design-showcase">
+                    <div class="showcase-box">
+                        <span class="showcase-tag">Low-Fidelity Concept</span>
+                        <div class="showcase-heading">Grayscale Layout Flow</div>
+                        <p class="showcase-desc">Lo-fi layouts defined structural guidelines, placing critical actions
+                            (From/To picker, seat layout rows, QR check-in) inside large target blocks. The layout
+                            forces linear booking flow directly to confirmation screens.</p>
+                    </div>
+                    <div class="showcase-box">
+                        <span class="showcase-tag">Heuristic Testing</span>
+                        <div class="showcase-heading">Touch Target Optimizations</div>
+                        <p class="showcase-desc">Testing of initial mockups revealed that the seat grid cells required
+                            larger hit sizes (min 44px) to support accessibility for elder commuters or passengers
+                            walking towards the bus stand.</p>
+                    </div>
+                </div>
+
+                <!-- Wireframe Image Display -->
+                <div class="wireframe-gallery-container"
+                    style="margin-top: 24px; border-radius: 16px; overflow: hidden; border: 1px solid var(--border-bright); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);">
+                    <img src="assets/images/goroute_wireframes.png" alt="GoRoute Low-Fidelity Wireframes"
+                        style="width: 100%; height: auto; display: block; image-rendering: -webkit-optimize-contrast; image-rendering: crisp-edges;" />
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. High-Fidelity UI -->
+        <section class="case-section">
+            <h2 class="section-title"><span class="section-number">06</span> High-Fidelity UI</h2>
+            <div class="section-headline">
+                Establishing trust with a highly readable design style using royal blue (#1E40AF) visual indicators.
+            </div>
+            <div class="section-content">
+                <div class="design-showcase">
+                    <div class="showcase-box">
+                        <span class="showcase-tag">Brand Color</span>
+                        <div class="showcase-heading">Trust Blue &amp; White Identity</div>
+                        <p class="showcase-desc">Royal Blue was selected as the dominant visual color to establish
+                            trust, cleanliness, and safety. Combined with slate backgrounds, it creates a readable
+                            screen interface under harsh sunlight.</p>
+                    </div>
+                    <div class="showcase-box">
+                        <span class="showcase-tag">Bilingual Future Scope</span>
+                        <div class="showcase-heading">Sinhala &amp; English Adaptability</div>
+                        <p class="showcase-desc">The typography hierarchy in Plus Jakarta Sans is designed with high
+                            vertical line spacing, preparing the system structures to wrap Sinhala and Tamil characters
+                            cleanly in local iterations.</p>
+                    </div>
+                </div>
+
+                <!-- High-Fidelity UI Gallery -->
+                <div class="hifi-gallery-container"
+                    style="margin-top: 24px; border-radius: 16px; overflow: hidden; border: 1px solid var(--border-bright); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);">
+                    <img src="assets/images/goroute_hifi.png" alt="GoRoute High-Fidelity Screens"
+                        style="width: 100%; height: auto; display: block; image-rendering: -webkit-optimize-contrast; image-rendering: crisp-edges;" />
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. Prototype -->
+        <section class="case-section">
+            <h2 class="section-title"><span class="section-number">07</span> Prototype</h2>
+            <div class="section-headline">
+                Click through the fully interactive High-Fidelity prototype directly in Figma.
+            </div>
+            <div class="section-content">
+                <div class="prototype-link-card">
+                    <div class="proto-text-wrap">
+                        <h4>Figma Prototype Flow</h4>
+                        <p>Explore all micro-interactions, seat selections, and wallet checkouts in this clickable
+                            demonstration.</p>
+                    </div>
+                    <a href="https://www.figma.com" target="_blank" class="btn-proto-link">Open Prototype →</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. Reflection -->
+        <section class="case-section" style="margin-bottom:0">
+            <h2 class="section-title"><span class="section-number">08</span> Reflection</h2>
+            <div class="section-headline">
+                Localizing details to fit regional user behaviors creates high-adoption products.
+            </div>
+            <div class="section-content">
+                <ul class="persona-list" style="font-size:14px;">
+                    <li><strong>Sri Lankan Wallet Integration:</strong> Standard credit cards are less common among
+                        daily commuters. Adding eZ Cash, Dialog Genie, and FriMi directly resolves checkout friction.
+                    </li>
+                    <li><strong>Seat Selection Transparency:</strong> Commuters prefer color-coded maps over simple
+                        checkboxes to confirm window seats, which are highly desired during hot day commutes.</li>
+                    <li><strong>Proactive Confirmation:</strong> Fast, unannounced schedules make immediate confirmation
+                        indicators (visual and haptic vibration feedback) essential to validate successful ticket
+                        booking.</li>
+                </ul>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        // Simulator Screen Switcher
+        function switchScreen(screenId) {
+            const screens = document.querySelectorAll('.phone-screen-state');
+            screens.forEach(scr => scr.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        // Start Route Search (Screen 1 -> Shimmer -> Screen 2)
+        function startSearch() {
+            switchScreen('scr-loading');
+            setTimeout(() => {
+                switchScreen('scr-buses');
+            }, 1000);
+        }
+
+        // Select Bus (Screen 2 -> Screen 3)
+        let selectedBusName = "";
+        let selectedBusPrice = 0;
+        function selectBus(name, price) {
+            selectedBusName = name;
+            selectedBusPrice = price;
+            document.getElementById('checkout-bus-name').innerText = name;
+            document.getElementById('checkout-fare').innerText = "Rs. " + price;
+            switchScreen('scr-seats');
+        }
+
+        // Select Seat (Screen 3)
+        let selectedSeatNum = "";
+        function selectSeat(seatId) {
+            const seats = document.querySelectorAll('.seat');
+            seats.forEach(s => {
+                if (!s.classList.contains('taken')) s.classList.remove('selected');
+            });
+
+            const selectedSeat = document.getElementById('seat-' + seatId);
+            selectedSeat.classList.add('selected');
+
+            selectedSeatNum = seatId;
+            document.getElementById('checkout-seat-no').innerText = seatId;
+
+            const badge = document.getElementById('seat-badge');
+            badge.innerText = `Seat ${seatId} Selected - Rs. ${selectedBusPrice}`;
+            badge.style.display = 'block';
+
+            document.getElementById('btn-seats-proceed').disabled = false;
+        }
+
+        // Proceed to Checkout (Screen 3 -> Screen 4)
+        function proceedToPayment() {
+            switchScreen('scr-checkout');
+        }
+
+        // Select Payment Method (Screen 4)
+        let selectedWallet = "ezcash";
+        function selectPayment(walletId) {
+            const cards = document.querySelectorAll('.payment-option-card');
+            cards.forEach(c => c.classList.remove('selected'));
+
+            event.currentTarget.classList.add('selected');
+            selectedWallet = walletId;
+        }
+
+        // Complete Checkout & Payment (Screen 4 -> Screen 5)
+        function payNow() {
+            switchScreen('scr-success');
+        }
+
+        // Start Live Tracking (Screen 5 -> Screen 6 with animations)
+        function startTracking() {
+            switchScreen('scr-tracking');
+
+            // Trigger GPS Map animations
+            setTimeout(() => {
+                const mapLine = document.getElementById('map-active-line');
+                const busMarker = document.getElementById('map-bus-marker');
+
+                mapLine.classList.add('animate');
+                busMarker.classList.add('animate');
+
+                // Countdown timer animation
+                let timeRemaining = 4;
+                const timerEl = document.getElementById('countdown-timer');
+
+                const countdownInterval = setInterval(() => {
+                    if (timeRemaining > 1) {
+                        timeRemaining--;
+                        timerEl.innerText = timeRemaining + " mins";
+                    } else {
+                        timerEl.innerText = "Arriving";
+                        clearInterval(countdownInterval);
+                    }
+                }, 1300);
+            }, 300);
+        }
+
+        // Reset Simulator to Initial State
+        function resetSimulator() {
+            // Reset variables
+            selectedBusName = "";
+            selectedBusPrice = 0;
+            selectedSeatNum = "";
+            selectedWallet = "ezcash";
+
+            // Reset UI
+            const seats = document.querySelectorAll('.seat');
+            seats.forEach(s => s.classList.remove('selected'));
+            document.getElementById('seat-badge').style.display = 'none';
+            document.getElementById('btn-seats-proceed').disabled = true;
+
+            const mapLine = document.getElementById('map-active-line');
+            const busMarker = document.getElementById('map-bus-marker');
+            mapLine.classList.remove('animate');
+            busMarker.classList.remove('animate');
+            document.getElementById('countdown-timer').innerText = "4 mins";
+
+            // Go to search screen
+            switchScreen('scr-search');
+        }
+    </script>
+</body>
+
+</html>
