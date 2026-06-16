@@ -2033,3 +2033,33 @@ footer {
     flex-direction: column;
   }
 }
+
+/* ==========================================================================
+   11. EMAIL TOAST NOTIFICATION STYLES
+   ========================================================================== */
+.email-toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: rgba(10, 10, 18, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  color: var(--text);
+  border: 1px solid var(--border-bright);
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(99, 102, 241, 0.2);
+  z-index: 2000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s var(--ease-smooth), transform 0.4s var(--ease-smooth);
+}
+
+.email-toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
+}

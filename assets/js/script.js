@@ -56,11 +56,10 @@ if (menuToggle && nav) {
   });
 }
 
-// Email CTA Handler (copy to clipboard and show toast)
+// Email CTA Handler (copy to clipboard and show toast, while allowing native mailto action)
 const emailCta = document.querySelector('.btn-email-cta');
 if (emailCta) {
   emailCta.addEventListener('click', (e) => {
-    e.preventDefault(); // Prevent opening blank browser tabs or triggering mailto protocol error
     const email = 'rushkharamzaan2001@gmail.com';
     
     // Copy email to clipboard
